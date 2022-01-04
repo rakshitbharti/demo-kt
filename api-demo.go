@@ -156,7 +156,7 @@ func (m *MapStore) GetAll() ([]Customer, error) {
 }
 func InitializeRoutes(h *CustomerController) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/api/customer", h.GetAll).Methods("GET")
+	r.HandleFunc("/", h.GetAll).Methods("GET")
 	r.HandleFunc("/api/customer/{id}", h.Get).Methods("GET")
 	r.HandleFunc("/api/customer", h.Add).Methods("POST")
 	r.HandleFunc("/api/customer/{id}", h.Update).Methods("PUT")
