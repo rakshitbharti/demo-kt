@@ -156,12 +156,33 @@ func (m *MapStore) GetAll() ([]Customer, error) {
 }
 func InitializeRoutes(h *CustomerController) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", h.GetAll).Methods("GET")
+	r.HandleFunc("/",index)
+	r.HandleFunc("/api/customers", h.GetAll).Methods("GET")
 	r.HandleFunc("/api/customer/{id}", h.Get).Methods("GET")
 	r.HandleFunc("/api/customer", h.Add).Methods("POST")
 	r.HandleFunc("/api/customer/{id}", h.Update).Methods("PUT")
 	r.HandleFunc("/api/customer/{id}", h.Delete).Methods("DELETE")
 	return r
+}
+func index(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set(
+		"Content-Type",
+		"text/html",
+	)
+	html :=
+		`<doctype html>
+        <html>
+	<head>
+		<title>Hello To Reversekt demo</title>
+	</head>
+	<body>
+		<b>Welcome to reverse kt demo</b>
+        <p>
+            <a href="/api/customers">Get all customer</a> |  <a href="/api/customer/{id}"></a>
+        </p>
+	</body>
+</html>`
+	fmt.Fprintf(w, html)
 }
 func main() {
 	controller := &CustomerController{
